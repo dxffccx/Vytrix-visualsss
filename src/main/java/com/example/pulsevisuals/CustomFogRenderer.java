@@ -1,1 +1,22 @@
+package com.example.pulsevisuals;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+
+@Environment(EnvType.CLIENT)
+public class CustomBlockOverlay {
+
+    public static void render(WorldRenderContext context) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.crosshairTarget == null || client.crosshairTarget.getType() != HitResult.Type.BLOCK) {
+            return;
+        }
+
+        BlockHitResult blockHit = (BlockHitResult) client.crosshairTarget;
+    }
+}
 

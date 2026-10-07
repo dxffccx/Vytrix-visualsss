@@ -1,22 +1,19 @@
 package com.example.pulsevisuals;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.render.BackgroundRenderer;
+import net.minecraft.client.render.Camera;
 
-@Environment(EnvType.CLIENT)
-public class CustomBlockOverlay {
+public class CustomFogRenderer {
 
-    public static void render(WorldRenderContext context) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.crosshairTarget == null || client.crosshairTarget.getType() != HitResult.Type.BLOCK) {
-            return;
-        }
+    public static void applyCustomFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog) {
+        if (!VytrixVisualsMod.customFogEnabled) return;
 
-        BlockHitResult blockHit = (BlockHitResult) client.crosshairTarget;
+        // Дистанция начала и конца тумана (в блоках)
+        RenderSystem.setShaderFogStart(2.0f);
+        RenderSystem.setShaderFogEnd(24.0f);
+
+        // Цвет тумана в формате RGBA (от 0.0f до 1.0f)
+        RenderSystem.setShaderFogColor(0.1f, 0.05f, 0.2f, 1.0f);
     }
 }
-
